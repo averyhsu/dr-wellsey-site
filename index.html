@@ -22,6 +22,19 @@ a:hover{color:#0E8A84}
 button{font-family:inherit}
 @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @keyframes toastIn{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+/* 品牌哲學 panel: scroll-triggered motion. Elements start offset and transparent; the .in class (set by an IntersectionObserver) releases them. */
+#philosophy .mv{opacity:0;transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1),letter-spacing 1.1s cubic-bezier(.2,.7,.2,1)}
+#philosophy .mv-l{transform:translateX(-56px)}
+#philosophy .mv-r{transform:translateX(64px)}
+#philosophy .mv-up{transform:translateY(26px)}
+#philosophy .mv-eyebrow{letter-spacing:0.6em}
+#philosophy .mv-line{transform:scaleX(0);transform-origin:left center}
+#philosophy .mv-headline{display:block;overflow:hidden}
+#philosophy .mv-headline > span{display:block;transform:translateY(110%);transition:transform .85s cubic-bezier(.2,.7,.2,1)}
+#philosophy.in .mv{opacity:1;transform:none}
+#philosophy.in .mv-eyebrow{letter-spacing:0.28em}
+#philosophy.in .mv-headline > span{transform:none}
+@media (prefers-reduced-motion:reduce){#philosophy .mv,#philosophy .mv-headline > span{opacity:1;transform:none;transition:none;letter-spacing:0.28em}}
 </style>
 </helmet>
 
@@ -45,6 +58,7 @@ button{font-family:inherit}
         </sc-if>
       </div>
       <button type="button" onClick="{{ goClassroom }}" style="background:none;border:0;cursor:pointer;font-size:15px;font-weight:500;letter-spacing:0.06em;padding:10px 16px;color: {{ navClass }}">益生菌科普</button>
+      <button type="button" onClick="{{ goTeam }}" style="background:none;border:0;cursor:pointer;font-size:15px;font-weight:500;letter-spacing:0.06em;padding:10px 16px;color: {{ navTeam }}">團隊與認證</button>
     </nav>
     <div style="display:flex;align-items:center;gap:20px">
       <button type="button" style="background:none;border:0;cursor:pointer;font-size:14px;color:#404048;letter-spacing:0.04em;padding:8px 0">會員登入</button>
@@ -59,74 +73,61 @@ button{font-family:inherit}
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
 <div data-screen-label="品牌理念">
 
-  <section style="background:#F6F7F5">
-    <div style="max-width:1280px;margin:0 auto;padding:56px 32px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:48px;align-items:stretch">
-      <div style="display:flex;flex-direction:column;justify-content:center;padding:32px 0 80px">
-        <p style="margin:0 0 28px;font-size:13px;letter-spacing:0.28em;color:#0E8A84;font-weight:600">DR. WELLSEY · PROBIOTICS</p>
-        <h1 style="margin:0 0 28px;font-size:clamp(36px,4.4vw,58px);line-height:1.25;font-weight:600;color:#102860;letter-spacing:0.02em;text-wrap:pretty">把成本花在品質上，<br>把利潤讓給消費者。</h1>
-        <p style="margin:0 0 40px;font-size:18px;line-height:1.9;color:#404048;max-width:480px;text-wrap:pretty">衛熹的誕生，不是因為市場缺少益生菌，而是因為我們始終找不到一款真正符合自己期待的產品。</p>
-        <div style="display:flex;gap:14px;flex-wrap:wrap">
-          <button type="button" onClick="{{ scrollToStory }}" style="background:#102860;color:#fff;border:0;cursor:pointer;font-size:15px;letter-spacing:0.06em;padding:16px 32px;border-radius:6px" style-hover="background:#0C1E4A">認識衛熹</button>
-          <button type="button" onClick="{{ goShopAll }}" style="background:transparent;color:#102860;border:1.5px solid #102860;cursor:pointer;font-size:15px;letter-spacing:0.06em;padding:16px 32px;border-radius:6px" style-hover="background:#102860;color:#fff">前往商城</button>
+  <section style="background:#EFEBE5">
+    <div style="max-width:1280px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:0;align-items:stretch">
+      <div style="display:flex;flex-direction:column;justify-content:center;padding:88px 32px 88px 0">
+        <p style="margin:0 0 28px;font-size:13px;letter-spacing:0.32em;color:#0E8A84;font-weight:600">SCIENCE · BALANCE · LIFE</p>
+        <h1 style="margin:0 0 32px;font-size:clamp(40px,5vw,68px);line-height:1.2;font-weight:500;color:#102860;letter-spacing:0.04em;text-wrap:pretty">探索生命的<br>平衡之美。</h1>
+        <p style="margin:0 0 6px;font-size:20px;font-weight:500;color:#2B2D33;letter-spacing:0.04em">衛熹生醫 Dr. Wellsey</p>
+        <p style="margin:0 0 44px;font-size:17px;line-height:1.9;color:#404048;letter-spacing:0.04em;max-width:420px;text-wrap:pretty">以科學為起點，關注每一天的健康。</p>
+        <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
+          <button type="button" onClick="{{ scrollToStory }}" style="background:#102860;color:#fff;border:0;cursor:pointer;font-size:15px;letter-spacing:0.12em;padding:17px 36px;border-radius:999px;display:inline-flex;align-items:center;gap:12px" style-hover="background:#0C1E4A">認識衛熹 <span aria-hidden="true">→</span></button>
+          <button type="button" onClick="{{ goShopAll }}" style="background:none;border:0;cursor:pointer;font-size:14px;letter-spacing:0.08em;color:#102860;padding:8px 0;border-bottom:1px solid rgba(16,40,96,0.4)" style-hover="color:#0E8A84;border-color:#0E8A84">前往商城</button>
         </div>
       </div>
-      <div style="position:relative;background:#102860;border-radius:6px 6px 0 0;min-height:540px;overflow:hidden;display:flex;align-items:center;justify-content:center">
-        <img src="assets/brand/hex-bubbles.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.14;mix-blend-mode:screen">
-        <div style="position:absolute;right:40px;bottom:40px;width:180px;height:120px;background-image:radial-gradient(#20B0A8 1.6px, transparent 1.8px);background-size:16px 16px;opacity:0.9"></div>
-        <div style="position:absolute;left:40px;top:40px;width:120px;height:80px;background-image:radial-gradient(#20B0A8 1.6px, transparent 1.8px);background-size:16px 16px;opacity:0.5"></div>
-        <sc-if value="{{ heroShowsLogo }}" hint-placeholder-val="{{ true }}">
+      <div style="position:relative;min-height:520px;overflow:hidden;display:flex;align-items:center;justify-content:center">
+        <sc-if value="{{ heroShowsPhoto }}" hint-placeholder-val="{{ true }}">
+          <img src="assets/brand/hero-molecules.jpg" alt="象徵益生菌與平衡的立體分子造型" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center">
+        </sc-if>
+        <sc-if value="{{ heroShowsLogo }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#102860"></div>
+          <img src="assets/brand/hex-bubbles.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.14;mix-blend-mode:screen">
           <img src="assets/brand/logo-white-stack.png" alt="衛熹生醫 Dr. Wellsey" style="position:relative;width:min(56%,380px);height:auto;display:block">
         </sc-if>
         <sc-if value="{{ heroShowsMark }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#102860"></div>
           <img src="assets/brand/mark.png" alt="衛熹生醫標誌" style="position:relative;width:min(66%,520px);height:auto;display:block">
         </sc-if>
       </div>
     </div>
   </section>
 
-  <section style="background:#fff;border-top:1px solid #E3E6E8">
+  <section id="philosophy" style="background:#fff;border-top:1px solid #E3E6E8">
     <div style="max-width:1280px;margin:0 auto;padding:96px 32px">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:start">
         <div>
-          <p style="margin:0 0 20px;font-size:13px;letter-spacing:0.28em;color:#0E8A84;font-weight:600">品牌哲學</p>
-          <h2 style="margin:0 0 24px;font-size:clamp(30px,3.4vw,44px);line-height:1.3;font-weight:600;color:#102860;letter-spacing:0.02em">高成本主義，<br>合理價哲學。</h2>
-          <p style="margin:0;font-size:17px;line-height:1.9;color:#404048;max-width:440px;text-wrap:pretty">我們不是不懂成本控制，只是不願意拿品質來交換利潤。</p>
+          <p class="mv mv-l mv-eyebrow" style="margin:0 0 20px;font-size:13px;color:#0E8A84;font-weight:600">品牌哲學</p>
+          <h2 style="margin:0 0 24px;font-size:clamp(30px,3.4vw,44px);line-height:1.3;font-weight:600;color:#102860;letter-spacing:0.02em"><span class="mv-headline"><span style="transition-delay:120ms">高成本主義，</span></span><span class="mv-headline"><span style="transition-delay:260ms">合理價哲學。</span></span></h2>
+          <p class="mv mv-up" style="margin:0;font-size:17px;line-height:1.9;color:#404048;max-width:440px;text-wrap:pretty;transition-delay:480ms">我們不是不懂成本控制，只是不願意拿品質來交換利潤。</p>
         </div>
-        <div style="display:grid;gap:0;border-top:1px solid #E3E6E8">
-          <div style="display:grid;grid-template-columns:64px 1fr;gap:16px;padding:28px 0;border-bottom:1px solid #E3E6E8">
+        <div style="display:grid;gap:0;position:relative">
+          <div class="mv mv-line" style="height:1px;background:#E3E6E8;transition-delay:200ms"></div>
+          <div class="mv mv-r" style="display:grid;grid-template-columns:64px 1fr;gap:16px;padding:28px 0;transition-delay:300ms">
             <span style="font-size:14px;font-weight:600;color:#20B0A8;letter-spacing:0.1em;padding-top:4px">01</span>
             <div><h3 style="margin:0 0 8px;font-size:20px;font-weight:600;color:#102860">成分全揭露</h3><p style="margin:0;font-size:15px;line-height:1.85;color:#404048">明確標示每一株菌的菌數，以及所有輔助配方的成分與含量。我們敢讓消費者知道所購買產品的細節，完全經得起比較。</p></div>
           </div>
-          <div style="display:grid;grid-template-columns:64px 1fr;gap:16px;padding:28px 0;border-bottom:1px solid #E3E6E8">
+          <div class="mv mv-line" style="height:1px;background:#E3E6E8;transition-delay:450ms"></div>
+          <div class="mv mv-r" style="display:grid;grid-template-columns:64px 1fr;gap:16px;padding:28px 0;transition-delay:520ms">
             <span style="font-size:14px;font-weight:600;color:#20B0A8;letter-spacing:0.1em;padding-top:4px">02</span>
             <div><h3 style="margin:0 0 8px;font-size:20px;font-weight:600;color:#102860">效期內菌數保證</h3><p style="margin:0;font-size:15px;line-height:1.85;color:#404048">不用低價的混合菌粉來充高菌數。在效期內，產品菌數含量保證，讓你安心長期使用。</p></div>
           </div>
-          <div style="display:grid;grid-template-columns:64px 1fr;gap:16px;padding:28px 0;border-bottom:1px solid #E3E6E8">
+          <div class="mv mv-line" style="height:1px;background:#E3E6E8;transition-delay:680ms"></div>
+          <div class="mv mv-r" style="display:grid;grid-template-columns:64px 1fr;gap:16px;padding:28px 0;transition-delay:740ms">
             <span style="font-size:14px;font-weight:600;color:#20B0A8;letter-spacing:0.1em;padding-top:4px">03</span>
             <div><h3 style="margin:0 0 8px;font-size:20px;font-weight:600;color:#102860">合理售價</h3><p style="margin:0;font-size:15px;line-height:1.85;color:#404048">寧願捨棄高抽成的大型通路，也要把實惠直接留給消費者。同樣的產品規格，我們努力讓售價更親近。</p></div>
           </div>
+          <div class="mv mv-line" style="height:1px;background:#E3E6E8;transition-delay:900ms"></div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="story" style="background:#F6F7F5">
-    <div style="max-width:1280px;margin:0 auto;padding:96px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:48px">
-      <div>
-        <div style="position:sticky;top:112px">
-          <img src="assets/brand/mark.png" alt="" style="width:88px;height:auto;display:block;margin-bottom:28px">
-          <p style="margin:0 0 12px;font-size:13px;letter-spacing:0.28em;color:#0E8A84;font-weight:600">創始人的話</p>
-          <h2 style="margin:0;font-size:clamp(28px,3vw,40px);line-height:1.35;font-weight:600;color:#102860;letter-spacing:0.02em;text-wrap:pretty">同樣的售價，我們願意投入更多成本；同樣的品質，我們希望讓你花得更少。</h2>
-        </div>
-      </div>
-      <div style="grid-column:span 1;max-width:620px;display:grid;gap:22px;font-size:17px;line-height:2;color:#2B2D33">
-        <p style="margin:0">衛熹的誕生，不是因為市場缺少益生菌，而是因為我們始終找不到一款真正符合自己期待的產品。</p>
-        <p style="margin:0">身為醫療專業背景的團隊，我們對菌株、配方與品質有著近乎固執的堅持。</p>
-        <p style="margin:0">我們相信，真正的好菌，不該只有昂貴的價格，更應該有透明的成分與經得起檢驗的品質。</p>
-        <p style="margin:0">同樣的售價，我們願意投入更多成本；同樣的品質，我們希望讓你花得更少。</p>
-        <p style="margin:0">因此，我們寧願壓縮自己的利潤，也不願犧牲產品的品質；寧願捨棄高抽成的大型通路，也希望把實惠直接留給消費者。</p>
-        <p style="margin:0">因為我們想做的，從來不是一款利潤最高的益生菌，而是一款自己與家人都願意安心、長期使用，也樂於推薦給朋友的好產品。</p>
-        <p style="margin:12px 0 0;font-size:22px;font-weight:600;color:#102860;line-height:1.6">把成本花在品質上，把利潤讓給消費者。<br>這就是衛熹的選擇。</p>
       </div>
     </div>
   </section>
@@ -161,61 +162,80 @@ button{font-family:inherit}
     </div>
   </section>
 
-  <section style="background:#fff">
-    <div style="max-width:1280px;margin:0 auto;padding:96px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:center">
-      <div>
-        <p style="margin:0 0 16px;font-size:13px;letter-spacing:0.28em;color:#0E8A84;font-weight:600">為什麼值得</p>
-        <h2 style="margin:0 0 20px;font-size:clamp(28px,3vw,40px);line-height:1.3;font-weight:600;color:#102860;letter-spacing:0.02em">如果你問「為什麼值得花這個價錢」</h2>
-        <p style="margin:0;font-size:16px;line-height:1.9;color:#404048;max-width:440px">當我們設計這款產品的時候，生技製造廠商表示我們的售價可以訂在兩千多元。但我們不願意將產品定位在高成本就得用高售價來推銷。</p>
+  <section id="story" style="background:#F6F7F5">
+    <div style="max-width:1280px;margin:0 auto;padding:96px 32px">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:36px">
+        <div>
+          <p style="margin:0 0 16px;font-size:13px;letter-spacing:0.28em;color:#0E8A84;font-weight:600">ABOUT</p>
+          <h2 style="margin:0;font-size:clamp(28px,3vw,40px);line-height:1.3;font-weight:600;color:#102860;letter-spacing:0.02em">認識衛熹</h2>
+        </div>
+        <p style="margin:0;max-width:420px;font-size:15px;line-height:1.85;color:#404048">創始人的話與為什麼值得，點開想看的部分；團隊與認證有自己的頁面。</p>
       </div>
-      <div style="display:grid;gap:16px">
-        <div style="background:#F6F7F5;border-radius:6px;padding:28px 28px 28px 32px;display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
-          <span style="font-size:26px;font-weight:600;color:#20B0A8;line-height:1">a</span>
-          <p style="margin:0;font-size:16px;line-height:1.85;color:#2B2D33">市面上找不到類似的羅伊氏菌，和本產品使用的菌種菌數組合。</p>
-        </div>
-        <div style="background:#F6F7F5;border-radius:6px;padding:28px 28px 28px 32px;display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
-          <span style="font-size:26px;font-weight:600;color:#20B0A8;line-height:1">b</span>
-          <p style="margin:0;font-size:16px;line-height:1.85;color:#2B2D33">在國內外市場中相似的益生菌組合，價格是我們產品的數倍之多。</p>
-        </div>
-        <div style="background:#F6F7F5;border-radius:6px;padding:28px 28px 28px 32px;display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
-          <span style="font-size:26px;font-weight:600;color:#20B0A8;line-height:1">c</span>
-          <p style="margin:0;font-size:16px;line-height:1.85;color:#2B2D33">市面上極少數敢公開所有輔助配方成分和含量的產品。就是因為性價比很高，所以不怕消費者比較。</p>
-        </div>
+
+      <div style="border-top:1px solid #D7DBDF">
+
+        <!-- 01 創始人的話 -->
+        <button type="button" onClick="{{ toggleStory }}" aria-expanded="{{ accStory }}" style="width:100%;background:none;border:0;border-bottom:1px solid #D7DBDF;cursor:pointer;text-align:left;display:grid;grid-template-columns:64px 1fr 40px;gap:16px;align-items:center;padding:26px 0" style-hover="color:#0E8A84">
+          <span style="font-size:14px;font-weight:600;color:#20B0A8;letter-spacing:0.1em">01</span>
+          <span style="font-size:22px;font-weight:600;color:#102860">創始人的話 <span style="font-weight:400;font-size:15px;color:#6B7080;margin-left:10px">同樣的售價，我們願意投入更多成本</span></span>
+          <span style="font-size:26px;font-weight:300;color:#102860;text-align:right;line-height:1">{{ storyIcon }}</span>
+        </button>
+        <sc-if value="{{ accStory }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:40px 0 56px;border-bottom:1px solid #D7DBDF;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:48px;animation:rise 0.5s cubic-bezier(.2,.7,.2,1) both">
+            <div>
+              <img src="assets/brand/mark.png" alt="" style="width:88px;height:auto;display:block;margin-bottom:28px">
+              <h3 style="margin:0;font-size:clamp(24px,2.6vw,34px);line-height:1.35;font-weight:600;color:#102860;letter-spacing:0.02em;text-wrap:pretty">同樣的售價，我們願意投入更多成本；同樣的品質，我們希望讓你花得更少。</h3>
+            </div>
+            <div style="max-width:620px;display:grid;gap:22px;font-size:17px;line-height:2;color:#2B2D33">
+              <p style="margin:0">衛熹的誕生，不是因為市場缺少益生菌，而是因為我們始終找不到一款真正符合自己期待的產品。</p>
+              <p style="margin:0">身為醫療專業背景的團隊，我們對菌株、配方與品質有著近乎固執的堅持。</p>
+              <p style="margin:0">我們相信，真正的好菌，不該只有昂貴的價格，更應該有透明的成分與經得起檢驗的品質。</p>
+              <p style="margin:0">同樣的售價，我們願意投入更多成本；同樣的品質，我們希望讓你花得更少。</p>
+              <p style="margin:0">因此，我們寧願壓縮自己的利潤，也不願犧牲產品的品質；寧願捨棄高抽成的大型通路，也希望把實惠直接留給消費者。</p>
+              <p style="margin:0">因為我們想做的，從來不是一款利潤最高的益生菌，而是一款自己與家人都願意安心、長期使用，也樂於推薦給朋友的好產品。</p>
+              <p style="margin:12px 0 0;font-size:22px;font-weight:600;color:#102860;line-height:1.6">把成本花在品質上，把利潤讓給消費者。<br>這就是衛熹的選擇。</p>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- 02 為什麼值得 -->
+        <button type="button" onClick="{{ toggleWhy }}" aria-expanded="{{ accWhy }}" style="width:100%;background:none;border:0;border-bottom:1px solid #D7DBDF;cursor:pointer;text-align:left;display:grid;grid-template-columns:64px 1fr 40px;gap:16px;align-items:center;padding:26px 0" style-hover="color:#0E8A84">
+          <span style="font-size:14px;font-weight:600;color:#20B0A8;letter-spacing:0.1em">02</span>
+          <span style="font-size:22px;font-weight:600;color:#102860">為什麼值得 <span style="font-weight:400;font-size:15px;color:#6B7080;margin-left:10px">如果你問「為什麼值得花這個價錢」</span></span>
+          <span style="font-size:26px;font-weight:300;color:#102860;text-align:right;line-height:1">{{ whyIcon }}</span>
+        </button>
+        <sc-if value="{{ accWhy }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:40px 0 56px;border-bottom:1px solid #D7DBDF;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:center;animation:rise 0.5s cubic-bezier(.2,.7,.2,1) both">
+            <p style="margin:0;font-size:16px;line-height:1.9;color:#404048;max-width:440px">當我們設計這款產品的時候，生技製造廠商表示我們的售價可以訂在兩千多元。但我們不願意將產品定位在高成本就得用高售價來推銷。</p>
+            <div style="display:grid;gap:16px">
+              <div style="background:#fff;border-radius:6px;padding:28px 28px 28px 32px;display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
+                <span style="font-size:26px;font-weight:600;color:#20B0A8;line-height:1">a</span>
+                <p style="margin:0;font-size:16px;line-height:1.85;color:#2B2D33">市面上找不到類似的羅伊氏菌，和本產品使用的菌種菌數組合。</p>
+              </div>
+              <div style="background:#fff;border-radius:6px;padding:28px 28px 28px 32px;display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
+                <span style="font-size:26px;font-weight:600;color:#20B0A8;line-height:1">b</span>
+                <p style="margin:0;font-size:16px;line-height:1.85;color:#2B2D33">在國內外市場中相似的益生菌組合，價格是我們產品的數倍之多。</p>
+              </div>
+              <div style="background:#fff;border-radius:6px;padding:28px 28px 28px 32px;display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
+                <span style="font-size:26px;font-weight:600;color:#20B0A8;line-height:1">c</span>
+                <p style="margin:0;font-size:16px;line-height:1.85;color:#2B2D33">市面上極少數敢公開所有輔助配方成分和含量的產品。就是因為性價比很高，所以不怕消費者比較。</p>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- 團隊與認證 → own page -->
+        <button type="button" onClick="{{ goTeam }}" style="width:100%;background:none;border:0;border-bottom:1px solid #D7DBDF;cursor:pointer;text-align:left;display:grid;grid-template-columns:64px 1fr 40px;gap:16px;align-items:center;padding:26px 0" style-hover="color:#0E8A84">
+          <span style="font-size:14px;font-weight:600;color:#20B0A8;letter-spacing:0.1em">03</span>
+          <span style="font-size:22px;font-weight:600;color:#102860">團隊與認證 <span style="font-weight:400;font-size:15px;color:#6B7080;margin-left:10px">醫療專業背景的團隊，與經得起檢驗的品質</span></span>
+          <span style="font-size:22px;font-weight:300;color:#102860;text-align:right;line-height:1">→</span>
+        </button>
+
       </div>
     </div>
   </section>
 
-  <section style="background:#F6F7F5">
-    <div style="max-width:1280px;margin:0 auto;padding:96px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px;align-items:center">
-      <sc-if value="{{ showTeamPhoto }}" hint-placeholder-val="{{ true }}">
-        <div style="border-radius:6px;overflow:hidden;background:#E3E6E8;aspect-ratio:6/5"><img src="assets/team.png" alt="衛熹生醫醫療團隊" style="width:100%;height:100%;object-fit:cover;display:block"></div>
-      </sc-if>
-      <div>
-        <p style="margin:0 0 16px;font-size:13px;letter-spacing:0.28em;color:#0E8A84;font-weight:600">關於團隊</p>
-        <h2 style="margin:0 0 24px;font-size:clamp(28px,3vw,40px);line-height:1.3;font-weight:600;color:#102860;letter-spacing:0.02em">醫療專業背景的團隊，<br>對配方近乎固執。</h2>
-        <p style="margin:0 0 18px;font-size:16px;line-height:1.9;color:#404048;max-width:480px">我們不願意犧牲菌種菌數和品質，因為這些產品是我們自己的醫療團隊和院所客戶，以及家人都會長期使用的。</p>
-        <p style="margin:0;font-size:16px;line-height:1.9;color:#404048;max-width:480px">腸道健康是所有人都需要的。許多疾病被證實若具有健康腸道，罹患比例較低；足量且高品質的益生菌，對各年齡層都是必須的。</p>
-      </div>
-    </div>
-  </section>
-
-  <section style="background:#fff;border-top:1px solid #E3E6E8;border-bottom:1px solid #E3E6E8">
-    <div style="max-width:1280px;margin:0 auto;padding:72px 32px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:40px">
-      <div style="max-width:360px">
-        <p style="margin:0 0 12px;font-size:13px;letter-spacing:0.28em;color:#0E8A84;font-weight:600">品質與認證</p>
-        <h2 style="margin:0 0 12px;font-size:26px;line-height:1.35;font-weight:600;color:#102860">經得起檢驗的品質</h2>
-        <p style="margin:0;font-size:15px;line-height:1.8;color:#404048">所有菌株、菌數與輔助成分含量公開，並附上第三方檢驗與認證。</p>
-      </div>
-      <div style="display:flex;gap:28px;flex-wrap:wrap">
-        <image-slot id="cert-1" shape="circle" style="width:124px;height:124px" placeholder="認證標章 1"></image-slot>
-        <image-slot id="cert-2" shape="circle" style="width:124px;height:124px" placeholder="認證標章 2"></image-slot>
-        <image-slot id="cert-3" shape="circle" style="width:124px;height:124px" placeholder="認證標章 3"></image-slot>
-        <image-slot id="cert-4" shape="circle" style="width:124px;height:124px" placeholder="檢驗報告"></image-slot>
-      </div>
-    </div>
-  </section>
-
-  <section style="background:#F6F7F5">
+  <section style="background:#fff;border-top:1px solid #E3E6E8">
     <div style="max-width:1280px;margin:0 auto;padding:96px 32px">
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:40px">
         <div>
@@ -253,6 +273,75 @@ button{font-family:inherit}
         <p style="margin:0">我們把成本留給產品，把實惠留給消費者。因為真正的高性價比，不是買到最便宜，而是用實惠的價格，買到超越期待的品質。</p>
         <div style="margin-top:12px"><button type="button" onClick="{{ goShopAll }}" style="background:#20B0A8;color:#fff;border:0;cursor:pointer;font-size:15px;letter-spacing:0.06em;padding:16px 32px;border-radius:6px" style-hover="background:#1A9C95">前往商城</button></div>
       </div>
+    </div>
+  </section>
+
+</div>
+</sc-if>
+
+<!-- ================= TEAM & CERTIFICATION / 團隊與認證 ================= -->
+<sc-if value="{{ isTeam }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="團隊與認證">
+
+  <section style="background:#F6F7F5">
+    <div style="max-width:1280px;margin:0 auto;padding:72px 32px 64px">
+      <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.28em;color:#0E8A84;font-weight:600">TEAM &amp; QUALITY</p>
+      <h1 style="margin:0 0 16px;font-size:clamp(32px,3.6vw,46px);line-height:1.25;font-weight:600;color:#102860;letter-spacing:0.02em">團隊與認證</h1>
+      <p style="margin:0;font-size:16px;line-height:1.9;color:#404048;max-width:560px;text-wrap:pretty">做產品的人，和證明產品的方式。</p>
+    </div>
+  </section>
+
+  <section style="background:#fff;border-top:1px solid #E3E6E8">
+    <div style="max-width:1280px;margin:0 auto;padding:96px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px;align-items:center">
+      <sc-if value="{{ showTeamPhoto }}" hint-placeholder-val="{{ true }}">
+        <div style="border-radius:6px;overflow:hidden;background:#E3E6E8;aspect-ratio:6/5"><img src="assets/team.png" alt="衛熹生醫醫療團隊" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      </sc-if>
+      <div>
+        <p style="margin:0 0 16px;font-size:13px;letter-spacing:0.28em;color:#0E8A84;font-weight:600">關於團隊</p>
+        <h2 style="margin:0 0 24px;font-size:clamp(28px,3vw,40px);line-height:1.3;font-weight:600;color:#102860;letter-spacing:0.02em">醫療專業背景的團隊，<br>對配方近乎固執。</h2>
+        <p style="margin:0 0 18px;font-size:16px;line-height:1.9;color:#404048;max-width:480px">身為醫療專業背景的團隊，我們對菌株、配方與品質有著近乎固執的堅持。</p>
+        <p style="margin:0 0 18px;font-size:16px;line-height:1.9;color:#404048;max-width:480px">我們不願意犧牲菌種菌數和品質，因為這些產品是我們自己的醫療團隊和院所客戶，以及家人都會長期使用的。</p>
+        <p style="margin:0;font-size:16px;line-height:1.9;color:#404048;max-width:480px">腸道健康是所有人都需要的。許多疾病被證實若具有健康腸道，罹患比例較低；足量且高品質的益生菌，對各年齡層都是必須的。</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#F6F7F5;border-top:1px solid #E3E6E8">
+    <div style="max-width:1280px;margin:0 auto;padding:96px 32px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:start;margin-bottom:56px">
+        <div>
+          <p style="margin:0 0 16px;font-size:13px;letter-spacing:0.28em;color:#0E8A84;font-weight:600">品質與認證</p>
+          <h2 style="margin:0 0 20px;font-size:clamp(28px,3vw,40px);line-height:1.3;font-weight:600;color:#102860;letter-spacing:0.02em">經得起檢驗的品質</h2>
+          <p style="margin:0;font-size:16px;line-height:1.9;color:#404048;max-width:440px">所有菌株、菌數與輔助成分含量公開，並附上第三方檢驗與認證。我們敢讓消費者知道所購買產品的細節，完全經得起比較。</p>
+        </div>
+        <div style="display:grid;gap:0;border-top:1px solid #D7DBDF">
+          <div style="display:grid;grid-template-columns:64px 1fr;gap:16px;padding:24px 0;border-bottom:1px solid #D7DBDF">
+            <span style="font-size:14px;font-weight:600;color:#20B0A8;letter-spacing:0.1em;padding-top:3px">01</span>
+            <p style="margin:0;font-size:15px;line-height:1.8;color:#404048">每一株菌的菌數單獨標示，不以總菌數含糊帶過。</p>
+          </div>
+          <div style="display:grid;grid-template-columns:64px 1fr;gap:16px;padding:24px 0;border-bottom:1px solid #D7DBDF">
+            <span style="font-size:14px;font-weight:600;color:#20B0A8;letter-spacing:0.1em;padding-top:3px">02</span>
+            <p style="margin:0;font-size:15px;line-height:1.8;color:#404048">輔助配方除了成分，含量也一併公開。</p>
+          </div>
+          <div style="display:grid;grid-template-columns:64px 1fr;gap:16px;padding:24px 0;border-bottom:1px solid #D7DBDF">
+            <span style="font-size:14px;font-weight:600;color:#20B0A8;letter-spacing:0.1em;padding-top:3px">03</span>
+            <p style="margin:0;font-size:15px;line-height:1.8;color:#404048">在效期內，產品菌數含量保證；不用低價的混合菌粉來充高菌數。</p>
+          </div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid #E3E6E8;border-radius:6px;padding:48px 40px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:40px">
+        <image-slot id="cert-1" shape="circle" style="width:148px;height:148px" placeholder="認證標章 1"></image-slot>
+        <image-slot id="cert-2" shape="circle" style="width:148px;height:148px" placeholder="認證標章 2"></image-slot>
+        <image-slot id="cert-3" shape="circle" style="width:148px;height:148px" placeholder="認證標章 3"></image-slot>
+        <image-slot id="cert-4" shape="circle" style="width:148px;height:148px" placeholder="檢驗報告"></image-slot>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#102860;color:#fff">
+    <div style="max-width:1280px;margin:0 auto;padding:80px 32px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:32px">
+      <h2 style="margin:0;font-size:clamp(24px,2.6vw,34px);line-height:1.35;font-weight:600;letter-spacing:0.02em;max-width:620px;text-wrap:pretty">一款自己與家人都願意安心、長期使用，也樂於推薦給朋友的好產品。</h2>
+      <button type="button" onClick="{{ goShopAll }}" style="background:#20B0A8;color:#fff;border:0;cursor:pointer;font-size:15px;letter-spacing:0.06em;padding:16px 32px;border-radius:6px" style-hover="background:#1A9C95">前往商城</button>
     </div>
   </section>
 
@@ -457,6 +546,7 @@ button{font-family:inherit}
       <button type="button" onClick="{{ goHome }}" style="background:none;border:0;cursor:pointer;color:#fff;font-size:15px;text-align:left;padding:0" style-hover="color:#20B0A8">品牌理念</button>
       <button type="button" onClick="{{ goShopAll }}" style="background:none;border:0;cursor:pointer;color:#fff;font-size:15px;text-align:left;padding:0" style-hover="color:#20B0A8">商城</button>
       <button type="button" onClick="{{ goClassroom }}" style="background:none;border:0;cursor:pointer;color:#fff;font-size:15px;text-align:left;padding:0" style-hover="color:#20B0A8">益生菌科普</button>
+      <button type="button" onClick="{{ goTeam }}" style="background:none;border:0;cursor:pointer;color:#fff;font-size:15px;text-align:left;padding:0" style-hover="color:#20B0A8">團隊與認證</button>
     </div>
     <div style="display:grid;gap:10px;align-content:start">
       <p style="margin:0 0 6px;font-size:12px;letter-spacing:0.2em;color:#20B0A8;font-weight:600">商品分類</p>
@@ -483,7 +573,7 @@ button{font-family:inherit}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;startPage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;'home' | 'shop' | 'product' | 'classroom'&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;shop&quot;,&quot;product&quot;,&quot;classroom&quot;],&quot;section&quot;:&quot;頁面&quot;},&quot;heroMotif&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;logo&quot;,&quot;tsType&quot;:&quot;'logo' | 'mark'&quot;,&quot;options&quot;:[&quot;logo&quot;,&quot;mark&quot;],&quot;section&quot;:&quot;首頁&quot;},&quot;showTeamPhoto&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;首頁&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;startPage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;'home' | 'shop' | 'product' | 'classroom' | 'team'&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;shop&quot;,&quot;product&quot;,&quot;classroom&quot;,&quot;team&quot;],&quot;section&quot;:&quot;頁面&quot;},&quot;heroMotif&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;photo&quot;,&quot;tsType&quot;:&quot;'photo' | 'logo' | 'mark'&quot;,&quot;options&quot;:[&quot;photo&quot;,&quot;logo&quot;,&quot;mark&quot;],&quot;section&quot;:&quot;首頁&quot;},&quot;showTeamPhoto&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;首頁&quot;}}">
 const PRODUCTS = [
   { id:'sleep', name:'Sleep Well', zh:'益優眠', cat:'sleep', catLabel:'助眠舒壓', tag:'飲品型', form:'粉包沖泡', price:'NT$ 1,380', pack:'30 包 / 盒', img:'assets/brand/sachet.png', fit:'contain', pad:'28px',
     tagline:'天然植物萃取 × 頂級機能益生菌。以腸腦軸調節、神經放鬆與修復為主軸，可可榛果風味，口感佳。',
@@ -522,7 +612,25 @@ const ARTICLES = [
 ];
 
 class Component extends DCLogic {
-  state = { page: null, productId: 'sleep', category: 'all', shopMenu: false, cart: 0, toast: null, qty: 1 };
+  state = { page: null, productId: 'sleep', category: 'all', shopMenu: false, cart: 0, toast: null, qty: 1, acc: { story: true, why: false } };
+
+  componentDidMount() { this.armMotion(); }
+  componentDidUpdate() { this.armMotion(); }
+  componentWillUnmount() { if (this._io) this._io.disconnect(); }
+  // Adds .in to #philosophy once it scrolls into view, so its CSS transitions play. Re-armed on every render because the home screen unmounts when navigating away.
+  armMotion() {
+    const el = document.getElementById('philosophy');
+    if (!el || el === this._ioEl) return;
+    if (this._io) this._io.disconnect();
+    this._ioEl = el;
+    if (!('IntersectionObserver' in window)) { el.classList.add('in'); return; }
+    this._io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => { if (en.isIntersecting) { el.classList.add('in'); this._io.disconnect(); } });
+    }, { threshold: 0.25 });
+    this._io.observe(el);
+  }
+
+  toggleAcc(key) { this.setState(st => ({ acc: Object.assign({}, st.acc, { [key]: !st.acc[key] }) })); }
 
   go(page, extra) {
     this.setState(Object.assign({ page, shopMenu: false, qty: 1 }, extra || {}));
@@ -560,14 +668,16 @@ class Component extends DCLogic {
       related: all.filter(p => p.id !== cur.id)
     });
     const catObj = CATS.find(c => c.key === cat) || CATS[0];
-    const motif = this.props.heroMotif || 'logo';
+    const motif = this.props.heroMotif || 'photo';
+    const acc = this.state.acc;
     return {
-      isHome: page === 'home', isShop: page === 'shop', isProduct: page === 'product', isClassroom: page === 'classroom',
-      navHome: page === 'home' ? active : idle, navShop: (page === 'shop' || page === 'product') ? active : idle, navClass: page === 'classroom' ? active : idle,
+      isHome: page === 'home', isShop: page === 'shop', isProduct: page === 'product', isClassroom: page === 'classroom', isTeam: page === 'team',
+      navHome: page === 'home' ? active : idle, navShop: (page === 'shop' || page === 'product') ? active : idle, navClass: page === 'classroom' ? active : idle, navTeam: page === 'team' ? active : idle,
       goHome: () => this.go('home'),
       goShopAll: () => this.go('shop', { category: 'all' }),
       goClassroom: () => this.go('classroom'),
-      scrollToStory: () => { const el = document.getElementById('story'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: 'smooth' }); },
+      goTeam: () => this.go('team'),
+      scrollToStory: () => { this.setState(st => ({ acc: Object.assign({}, st.acc, { story: true }) })); const el = document.getElementById('story'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: 'smooth' }); },
       openShopMenu: () => this.setState({ shopMenu: true }),
       closeShopMenu: () => this.setState({ shopMenu: false }),
       shopMenu: this.state.shopMenu,
@@ -581,7 +691,10 @@ class Component extends DCLogic {
       timeline: TIMELINE.map((t, i) => Object.assign({ delay: (i * 110) + 'ms' }, t)),
       articles: ARTICLES,
       showTeamPhoto: this.props.showTeamPhoto !== false,
-      heroShowsLogo: motif === 'logo', heroShowsMark: motif === 'mark'
+      accStory: acc.story, accWhy: acc.why,
+      storyIcon: acc.story ? '−' : '+', whyIcon: acc.why ? '−' : '+',
+      toggleStory: () => this.toggleAcc('story'), toggleWhy: () => this.toggleAcc('why'),
+      heroShowsPhoto: motif === 'photo', heroShowsLogo: motif === 'logo', heroShowsMark: motif === 'mark'
     };
   }
 }
