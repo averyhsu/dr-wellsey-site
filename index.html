@@ -25,8 +25,10 @@ button{font-family:inherit}
 .glass::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,0.55) 0%,rgba(255,255,255,0.08) 48%,rgba(255,255,255,0) 52%,rgba(255,255,255,0.18) 100%);pointer-events:none;z-index:-1}
 .glass::after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,rgba(32,176,168,0.07),rgba(255,255,255,0) 30%,rgba(255,255,255,0) 70%,rgba(16,40,96,0.05));pointer-events:none;z-index:-1}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:rgba(255,255,255,0.94)}}
+@media (max-width:1023px){.nav-links,.nav-login{display:none !important}}
 @keyframes toastIn{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
 /* 品牌哲學 panel: scroll-triggered motion. Elements start offset and transparent; the .in class (set by an IntersectionObserver) releases them. */
+#philosophy{overflow:hidden}
 #philosophy .mv{opacity:0;transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1),letter-spacing 1.1s cubic-bezier(.2,.7,.2,1)}
 #philosophy .mv-l{transform:translateX(-56px)}
 #philosophy .mv-r{transform:translateX(64px)}
@@ -44,12 +46,12 @@ button{font-family:inherit}
 
 <div style="min-height:100vh;display:flex;flex-direction:column">
 
-<header style="position:sticky;top:0;z-index:50;margin-bottom:-92px;padding:14px 20px 0;pointer-events:none">
+<header style="position:sticky;top:0;z-index:50;margin-bottom:-78px;padding:14px 20px 0;pointer-events:none">
   <div class="glass" style="max-width:1240px;margin:0 auto;padding:0 10px 0 22px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:24px;pointer-events:auto">
     <button type="button" onClick="{{ goHome }}" style="background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center">
       <img src="assets/brand/logo-h.png" alt="衛熹生醫 Dr. Wellsey" style="height:34px;width:auto;display:block">
     </button>
-    <nav style="display:flex;align-items:center;gap:4px;height:64px">
+    <nav class="nav-links" style="display:flex;align-items:center;gap:4px;height:64px">
       <button type="button" onClick="{{ goHome }}" style="background:none;border:0;cursor:pointer;font-size:15px;font-weight:500;letter-spacing:0.06em;padding:10px 16px;border-radius:999px;color: {{ navHome }}" style-hover="background:rgba(255,255,255,0.55)">品牌理念</button>
       <div onMouseEnter="{{ openShopMenu }}" onMouseLeave="{{ closeShopMenu }}" style="position:relative;height:64px;display:flex;align-items:center">
         <button type="button" onClick="{{ goShopAll }}" style="background:none;border:0;cursor:pointer;font-size:15px;font-weight:500;letter-spacing:0.06em;padding:10px 16px;border-radius:999px;display:flex;align-items:center;gap:6px;color: {{ navShop }}" style-hover="background:rgba(255,255,255,0.55)">商城 <span style="font-size:10px;opacity:0.7">▼</span></button>
@@ -65,19 +67,19 @@ button{font-family:inherit}
       <button type="button" onClick="{{ goTeam }}" style="background:none;border:0;cursor:pointer;font-size:15px;font-weight:500;letter-spacing:0.06em;padding:10px 16px;border-radius:999px;color: {{ navTeam }}" style-hover="background:rgba(255,255,255,0.55)">團隊與認證</button>
     </nav>
     <div style="display:flex;align-items:center;gap:16px">
-      <button type="button" style="background:none;border:0;cursor:pointer;font-size:14px;color:#404048;letter-spacing:0.04em;padding:8px 4px">會員登入</button>
+      <button type="button" class="nav-login" style="background:none;border:0;cursor:pointer;font-size:14px;color:#404048;letter-spacing:0.04em;padding:8px 4px">會員登入</button>
       <button type="button" onClick="{{ goShopAll }}" style="background:#102860;color:#fff;border:0;cursor:pointer;font-size:14px;letter-spacing:0.04em;padding:10px 16px 10px 20px;border-radius:999px;display:flex;align-items:center;gap:8px" style-hover="background:#0C1E4A">購物車 <span style="background:#20B0A8;color:#fff;font-size:12px;font-weight:600;min-width:20px;height:20px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;padding:0 6px">{{ cart }}</span></button>
     </div>
   </div>
 </header>
 
-<main style="flex:1;padding-top:92px">
+<main style="flex:1;padding-top:78px">
 
 <!-- ================= HOME / 品牌理念 ================= -->
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
 <div data-screen-label="品牌理念">
 
-  <section style="position:relative;margin-top:-92px;background:#F5F1EB;min-height:max(640px,100vh);display:flex;align-items:center;overflow:hidden">
+  <section style="position:relative;margin-top:-78px;background:#F5F1EB;min-height:max(640px,100vh);min-height:max(640px,100dvh);display:flex;align-items:center;overflow:hidden">
     <img src="assets/brand/hero-bg.jpg" alt="" aria-hidden="true" style="position:absolute;top:0;right:0;height:100%;width:auto;max-width:none;object-fit:cover;object-position:right center;-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,0) 0%,#000 45%);mask-image:linear-gradient(90deg,rgba(0,0,0,0) 0%,#000 45%);pointer-events:none">
     <div style="position:absolute;inset:0;background:linear-gradient(90deg, rgba(245,241,235,0.85) 0%, rgba(245,241,235,0.35) 40%, rgba(245,241,235,0) 60%);pointer-events:none"></div>
     <div style="position:relative;max-width:1280px;width:100%;margin:0 auto;padding:140px 32px 96px">
