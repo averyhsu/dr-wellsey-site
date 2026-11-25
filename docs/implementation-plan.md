@@ -4,19 +4,46 @@ Companion to `docs/payment-system-design.md`, which holds the decisions and the 
 
 Status: plan only, 2026-11-25. Nothing here is built yet.
 
-## 0. Assumptions this plan rests on
+## 0. Confirmed decisions and how the build is run
 
-Three questions from the design session were not answered; the plan uses the recommended answer for each. Changing any of them changes the plan only where noted.
+### Confirmed on 2026-11-25
 
-| Assumption | Affects |
+| Decision | Affects |
 |---|---|
-| Technology and hosting as recommended in section 1 | Everything; confirm before Phase 1 |
-| One-time codes are sent by email only at launch, not SMS | Phase 3; adding SMS later is one provider and one setting |
+| Technology and hosting as in section 1 | Everything |
+| One-time codes are sent by email only, not SMS | Phase 3; adding SMS later is one provider and one setting |
 | Staff can edit text and images on brand pages, not rearrange layout | Phase 1 Content screen |
+| A review flagged for health-claim language does not auto-publish; it waits for staff | Phase 5 |
+
+### Who does the building
+
+The build is carried out by AI coding sessions, organised as follows:
+
+- **Orchestrator: Fable 5.2 at high effort.** It owns the plan, breaks each phase into tasks, writes the briefs, reviews every piece of returned work, runs the tests, and is the only one that merges and reports to you.
+- **Workers: Opus 5.5 at high effort**, started by the orchestrator as subagents, one per self-contained task (a provider module, a set of admin screens, a rule and its tests).
+
+Working rules:
+
+- The orchestrator's own model and effort level are whatever the session is started with, so each build session should be started on Fable 5.2 at high effort. Workers are started by the orchestrator with the model and effort set explicitly.
+- A worker gets a written brief: the goal, the files it owns, the interfaces it must match, the tests that must pass, and what it must not touch. Workers on parallel tasks never share files.
+- The pure business rules in section 3 and the database schema are written or reviewed by the orchestrator itself before workers build on them, because every other part depends on them.
+- No worker's output is accepted on its own report. The orchestrator reads the code and runs the checks and tests before merging.
+
+### Build first, ask at the end
+
+**No outside account is needed to build.** The work runs against a local database and stand-in versions of every provider, so development proceeds through Phases 1 to 5 without waiting on the company. Everything that needs an account, a key, a number or a sign-off is collected into one list (section 7) and requested once, when the build is otherwise complete.
+
+What this costs, stated plainly:
+
+- **You cannot click through a live test site until the hosting account exists.** Until then, each phase is reported with screenshots and test results from the build environment.
+- **Provider connections are unproven until real test accounts exist.** They are written from the providers' documentation and tested against stand-ins that imitate them. First contact with the real services happens in Phase 6 and will find differences, so that phase includes time to fix them.
+- Placeholders are used for anything unknown (shipping fee, company details, final product data) and listed so none are forgotten.
+
+Where a provider offers a public test environment that needs no account, the orchestrator may ask you to approve network access to it. That is a one-click approval in the session, not something you have to set up.
 
 Provider details (ECPay, LINE Pay, LINE) are written from general knowledge of their interfaces. **Each phase starts by reading the provider's current documentation and correcting this plan where it differs.**
 
-Effort figures are rough engineer-weeks for one experienced developer, given so the phases can be compared. They are not a schedule.
+Effort figures are rough engineer-weeks for one experienced human developer, given so the phases can be compared. They are not a schedule.
 
 ---
 
@@ -72,10 +99,10 @@ The GitHub Pages workflow is changed in Phase 1 to publish only `legacy-site/`, 
 | Environment | Purpose | Providers | Data |
 |---|---|---|---|
 | Local | Development | Fakes | Seeded sample data |
-| Staging | Review and staff testing, at a temporary address | Provider test environments | Test data, reset freely |
+| Staging (from Phase 6) | Review and staff testing, at a temporary address | Provider test environments | Test data, reset freely |
 | Production | The real shop | Live merchant accounts | Real, backed up daily, restore tested before launch |
 
-Every change goes: branch, automatic checks and tests, review, merge, automatic deploy to staging. Production deploys are a deliberate manual step.
+Every change goes: branch, automatic checks and tests, review, merge. Once staging exists in Phase 6, merges deploy to it automatically. Production deploys are a deliberate manual step.
 
 ---
 
@@ -141,26 +168,18 @@ Pay-at-pickup orders start at "preparing" with payment "pending", and become "pa
 
 ## 4. Phases
 
-### Phase 0: setup (about 1 week, mostly waiting on accounts)
+### Phase 0: nothing blocks the start
 
-| Task | Who |
-|---|---|
-| Confirm section 1 | You |
-| Create Google Cloud account and billing in the company's name; grant developer access | Company |
-| Apply for ECPay merchant account (payments, e-invoice, logistics) | Company |
-| Apply for LINE Pay merchant account | Company |
-| Create or verify the LINE Official Account; create a LINE Developers provider owned by the company | Company |
-| Confirm the domain and who controls its DNS | Company |
-| Read current ECPay, LINE Pay and LINE documentation; correct this plan | Developer |
+There is no setup step for the company before building begins. Phases 1 to 5 are built and tested in the build environment; hosting, live accounts and sign-offs are all gathered in Phase 6.
 
-Building does not wait for the merchant accounts: ECPay publishes shared test credentials, and LINE Pay offers a sandbox on sign-up.
+One optional head start: the ECPay and LINE Pay merchant applications take the longest to be approved. Starting them early shortens Phase 6, but the build does not depend on it.
 
 ### Phase 1: storefront and catalog (about 2–3 weeks)
 
 **Build**
 1. Move the current site to `legacy-site/`; narrow the Pages workflow.
 2. Application skeleton in `web/`; local database; checks and tests in GitHub Actions.
-3. Staging on Cloud Run with Cloud SQL, secrets, storage and automatic deploy.
+3. Deployment configuration for Cloud Run, Cloud SQL, secrets and storage written and kept ready; it is first run in Phase 6, when the hosting account exists. Images are stored on local disk behind the same interface until then.
 4. Database tables: products, variants, settings, content_pages, staff, audit_log.
 5. Design tokens and shared components taken from `frontend-v1-reference`: navigation, footer, buttons, cards, accordion, toast.
 6. Storefront pages at real addresses: `/`, `/team`, `/classroom`, `/classroom/[slug]`, `/shop`, `/shop/[category]`, `/products/[slug]`.
@@ -202,7 +221,7 @@ Building does not wait for the merchant accounts: ECPay publishes shared test cr
 11. Email: order confirmed, ATM payment instructions, paid, shipped, arrived, refunded.
 12. Admin screens: Home, Orders (with refund), Shipping (batch labels), Problems.
 
-**Done when**, on staging against provider test environments
+**Done when**, in the build environment against provider stand-ins (repeated against real test accounts in Phase 6)
 - A guest completes an order with card, with ATM, and with pay-at-pickup, for both 超商 chains and home delivery.
 - Each produces a correct invoice of each carrier type; a full refund voids it and a partial refund issues an allowance.
 - Failure drills pass:
@@ -253,7 +272,7 @@ This phase is a usable shop for guests. A limited launch after it is possible if
 9. Reports: points outstanding (for the accountant), promo code usage by campaign and channel.
 
 **Done when**
-- The unit tests for the rule combinations pass, and the same cases checked by hand on staging match to the dollar and the point.
+- The unit tests for the rule combinations pass, and the same cases walked through in the running application match to the dollar and the point.
 - Two browsers spending the same member's points at the same moment cannot overspend.
 - A code at its usage limit is refused; a cancelled order gives its use back.
 - A guest cannot apply a code; a member can combine one code with points.
@@ -275,7 +294,14 @@ This phase is a usable shop for guests. A limited launch after it is possible if
 - A guest reviews through the emailed link, and the link cannot be reused or used for another order.
 - The sold count matches a hand count from the Orders screen, rounded as configured.
 
-### Phase 6: launch (about 2–3 weeks)
+### Phase 6: connect, verify, launch (about 3–5 weeks, plus account approval time)
+
+**First: the one request to the company.** Everything in section 7 is asked for here, in a single list.
+
+**Then: connect the real services.**
+- Deploy to staging on the company's hosting account.
+- Replace each provider stand-in with the real test account, rerun every "done when" list from Phases 2 to 5 on staging, and fix what differs.
+- Replace placeholders with the company's real values.
 
 **Build and do**
 1. Reports and exports: sales by day, product and channel; reconciliation; customer, order, points and review exports (logged, restricted by role).
@@ -296,7 +322,7 @@ This phase is a usable shop for guests. A limited launch after it is possible if
 
 ### Total
 
-About 17–22 engineer-weeks across the six build phases, plus waiting time for merchant accounts and reviews by others.
+About 18–24 engineer-weeks across the six build phases, plus waiting time for merchant accounts and reviews by others.
 
 ---
 
@@ -309,7 +335,8 @@ About 17–22 engineer-weeks across the six build phases, plus waiting time for 
 | Provider contract | Our provider code against the providers' test environments: signatures, field formats, error cases | Nightly and before each release |
 | End to end | Full customer and staff journeys in a browser, on phone and desktop sizes | Before each release |
 | Failure drills | Lost, duplicated and delayed provider messages; provider outage; simultaneous purchases | End of Phases 2 and 4, and before launch |
-| Manual acceptance | The "done when" lists above, by you and company staff on staging | End of each phase |
+| Phase report | Screenshots and test results for each "done when" list, from the build environment | End of Phases 1 to 5 |
+| Manual acceptance | The "done when" lists, by you and company staff on staging | Phase 6 |
 
 ## 6. Risks
 
@@ -324,14 +351,29 @@ About 17–22 engineer-weeks across the six build phases, plus waiting time for 
 | Scope growth mid-build | Deferred items stay in the design document's "Later" list until launch |
 | Legal review changes review moderation or the sold count | Both are settings and rules in one place; the fallback for reviews is already designed |
 
-## 7. What is needed from the company, by phase
+## 7. The one request to the company, made at the start of Phase 6
 
-| Phase | Needed |
-|---|---|
-| 0 | Google Cloud account; ECPay and LINE Pay applications started; LINE Official Account and developer provider; domain details |
-| 1 | Final product names, prices, photos, ingredient lists |
-| 2 | Shipping fee, free-shipping threshold, pay-at-pickup cap; warehouse sender details; company name and 統編 for invoices; a sending email address on the company domain |
-| 3 | LINE channel credentials; wording approval for messages and the rich menu image |
-| 4 | Accountant's view on points liability |
-| 5 | Lawyer's health-claim word list and view on moderation and the sold count; who moderates |
-| 6 | Named technical owner; policy sign-off; staff time for the soft launch; 食品業者登錄 number |
+Nothing below is needed before then. Keys and passwords are entered through the session's secure credential form or the hosting account's secret store, never pasted into chat or committed to the repository.
+
+**Accounts and access**
+- Google Cloud account with billing, in the company's name, with developer access granted.
+- ECPay merchant account covering payments, e-invoice and logistics, with its test and live keys.
+- LINE Pay merchant account, with sandbox and live keys.
+- LINE Official Account (verified), and a LINE Developers provider owned by the company with a Login channel and a Messaging channel.
+- Google sign-in credentials for the site.
+- The domain, and access to its DNS settings.
+- An email-sending service account, and a sending address on the company domain.
+
+**Real values to replace placeholders**
+- Final product names, prices, photos, ingredient lists, stock.
+- Shipping fee, free-shipping threshold, pay-at-pickup order-value cap.
+- Warehouse sender details for shipping labels.
+- Company legal name, 統編, address and contact; 食品業者登錄 number.
+- Wording approval for LINE messages, emails and the rich menu image.
+
+**People and sign-offs**
+- Named technical owner after launch, and who holds the hosting account.
+- Staff list with roles; who answers LINE support; who moderates reviews.
+- Lawyer: policy pages, review moderation, the health-claim word list, the sold count, returns of opened boxes.
+- Accountant: invoice timing and the points liability.
+- Staff time for the soft launch.
