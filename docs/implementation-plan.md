@@ -255,7 +255,7 @@ This phase is a usable shop for guests. A limited launch after it is possible if
 
 **Done when**
 - A new customer goes from the rich menu to a paid LINE Pay order without typing a password.
-- A guest with two past orders signs up and sees both after verifying, and a different person using the same phone number without verifying sees nothing.
+- A guest with two past orders signs up and sees both after verifying, and a different person entering the same email address without verifying sees nothing.
 - One member signs in by LINE on a phone and Google on a laptop and sees the same account.
 - A bound member receives each order message in LINE; an unbound one receives email.
 - Deleting a member removes personal details and keeps the order and invoice records.

@@ -42,9 +42,9 @@ Two honest limits on "nobody needs to code":
 | Decision | Why |
 |---|---|
 | Guest checkout; no account needed to buy | Core requirement. |
-| One customer record for guests and members. **Phone is the main identifier** (provisional); **email is required** at checkout | Phone is needed for 超商取貨 anyway. Email delivers the e-invoice and guest order updates at no per-message cost. |
+| One customer record for guests and members. **Email is the main identifier** and is required at checkout. Phone is also required, as the contact for delivery and for the pay-at-pickup block | Verification codes go by email only, so email is what proves who a customer is. It also delivers the e-invoice and order updates at no per-message cost. Agreed 2026-11-25, replacing the earlier provisional choice of phone. |
 | A guest who signs up later claims their past orders only after verifying by one-time code | Prevents anyone seeing another person's orders and address. |
-| Records merge only on a verified phone or email, never on an unverified match | Same reason. LINE shares a customer's email only if LINE approves an application, so it cannot be relied on. |
+| Records merge only on a verified email, never on an unverified match | Same reason. LINE shares a customer's email only if LINE approves an application, so a LINE sign-in may need the customer to confirm an email before records can be joined. |
 | Member login: **LINE, Google, or email + password**; LINE shown first on mobile | LINE is one tap on mobile and automatic inside LINE. One member can attach several login methods. |
 | Guests earn no points, with no retroactive award after sign-up | Keeps the rules simple. |
 | No membership tiers | Deferred. |
@@ -267,9 +267,9 @@ The rule: if staff need it to run the shop, it is a screen. All in Traditional C
 
 | Table | Key fields | Notes |
 |---|---|---|
-| **customers** | id, phone, phone_verified_at, email, email_verified_at, name, is_member, marketing_consent_at, cod_blocked, deleted_at | One record whether guest or member. |
+| **customers** | id, email, email_verified_at, phone, name, is_member, marketing_consent_at, cod_blocked, deleted_at | One record whether guest or member. Matched by email. |
 | **login_identities** | id, customer_id, provider (line / google / email), provider_user_id, password_hash | Several per member. Unique on provider + provider_user_id. |
-| **one_time_codes** | id, target (phone or email), code_hash, purpose, expires_at, used_at | For verification and claiming guest orders. |
+| **one_time_codes** | id, email, code_hash, purpose, expires_at, used_at | For verification and claiming guest orders. Sent by email only. |
 | **products** | id, slug, name, category, description, status | A formula. Reviews and counts roll up here. |
 | **variants** | id, product_id, sku, pack_size, price, stock, reserved | The sellable item. |
 | **orders** | id, order_no, customer_id, channel (line / web), payment_status, shipping_status, items_total, promo_discount, points_used, shipping_fee, amount_due, payment_method, checkout_key, expires_at, paid_at, completed_at | amount_due = items_total − promo_discount − points_used + shipping_fee. Unique on checkout_key. |
@@ -311,7 +311,7 @@ sequenceDiagram
     G->>A: Cart, one-page checkout (name, phone, email, invoice choice)
     G->>X: Pick store on the 超商 map
     X-->>A: Chosen store
-    A->>A: Find or create customer by phone, create order, reserve stock
+    A->>A: Find or create customer by email, create order, reserve stock
     A->>P: Send customer to ECPay card page
     G->>P: Card or Apple Pay
     P-->>A: Payment result, server to server, signature checked
@@ -453,24 +453,23 @@ There is no platform plan and no percentage cut of sales.
 
 ### To check with the company
 
-1. Phone as the main customer identifier.
-2. Delivery methods (provisionally 7-11 and FamilyMart pickup plus home delivery).
-3. Whether the company warehouse ships, or an outside warehouse.
-4. Shipping fee amount, free-shipping threshold, and the pay-at-pickup order-value cap.
-5. Current 電子發票 provider, if any.
-6. Whether a LINE Official Account exists and is verified.
-7. ECPay merchant account (payments, e-invoice, logistics) and LINE Pay merchant account: none yet; applications need starting.
-8. Domain: whether the company owns one and who controls it.
-9. Sold-count display: rounded down with a "+", hidden under 100.
-10. Staff: how many need admin access, and whether the roles fit (orders and shipping, customer service, marketing, finance).
-11. Who answers LINE support and the hours; who moderates reviews and writes replies.
-12. Expected monthly LINE message volume.
-13. Who is responsible for a data incident.
-14. 食品業者登錄 registration number.
-15. **Who is the technical owner after launch**, and the budget for it.
-16. Who holds the hosting account and pays for it.
-17. Accountant: invoice timing; non-expiring points as a growing liability.
-18. Lawyer: review moderation approach and a health-claim word list; a sold count that keeps refunded units; returns of opened boxes; member terms allowing changes to the points program.
+1. Delivery methods (provisionally 7-11 and FamilyMart pickup plus home delivery).
+2. Whether the company warehouse ships, or an outside warehouse.
+3. Shipping fee amount, free-shipping threshold, and the pay-at-pickup order-value cap.
+4. Current 電子發票 provider, if any.
+5. Whether a LINE Official Account exists and is verified.
+6. ECPay merchant account (payments, e-invoice, logistics) and LINE Pay merchant account: none yet; applications need starting.
+7. Domain: whether the company owns one and who controls it.
+8. Sold-count display: rounded down with a "+", hidden under 100.
+9. Staff: how many need admin access, and whether the roles fit (orders and shipping, customer service, marketing, finance).
+10. Who answers LINE support and the hours; who moderates reviews and writes replies.
+11. Expected monthly LINE message volume.
+12. Who is responsible for a data incident.
+13. 食品業者登錄 registration number.
+14. **Who is the technical owner after launch**, and the budget for it.
+15. Who holds the hosting account and pays for it.
+16. Accountant: invoice timing; non-expiring points as a growing liability.
+17. Lawyer: review moderation approach and a health-claim word list; a sold count that keeps refunded units; returns of opened boxes; member terms allowing changes to the points program.
 
 ### Design questions not yet settled
 
