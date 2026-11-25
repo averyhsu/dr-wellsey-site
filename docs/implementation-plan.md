@@ -134,6 +134,8 @@ Input: cart lines, optional promo code, points to spend, delivery method, settin
 
 Refund for a line = (unit price × quantity refunded) − its promo share − its points share. Shipping is refunded only on a full refund before shipment, or at staff discretion with a reason.
 
+An order can be returned or refunded once. That one refund can cover all items or some of them; the database refuses a second refund for the same order.
+
 ### Review routing (Phase 5)
 
 On submission:

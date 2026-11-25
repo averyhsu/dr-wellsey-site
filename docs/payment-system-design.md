@@ -71,6 +71,7 @@ Two honest limits on "nobody needs to code":
 | E-invoices issued automatically: at payment for prepaid orders, at shipment for pay-at-pickup | No staff action. Timing to be confirmed by the accountant. |
 | Checkout offers four invoice choices: member/email carrier (default), 手機條碼載具, donation (愛心碼), company invoice with 統編 | Legal requirement, and clinic customers need 統編 invoices. |
 | Refund invoices: void (作廢) for a full refund in the same invoice period; allowance (折讓) for a partial or later refund; both automatic from the refund screen | Standard practice. |
+| **One return or refund per order.** That one refund can be full or partial | Agreed 2026-11-25. Simpler for staff and for the records, and it is also how the hosted platform works, so the rule holds whichever option is chosen. |
 | ATM and pay-at-pickup refunds: member chooses bank transfer or store credit (購物金); guests get bank transfer | There is no card to refund to, and guests have no account to hold credit. |
 
 ### Points
@@ -250,7 +251,7 @@ The rule: if staff need it to run the shop, it is a screen. All in Traditional C
 | Screen | What staff do there |
 |---|---|
 | **Home** | Today's orders and revenue; items needing attention (orders to ship, reviews waiting, refunds requested, problems). |
-| **Orders** | Search and filter; open an order to see payment, shipping, invoice, points and messages in one place; cancel; refund in full or part (invoice, points and refund method handled automatically). |
+| **Orders** | Search and filter; open an order to see payment, shipping, invoice, points and messages in one place; cancel; refund once, in full or part (invoice, points and refund method handled automatically). |
 | **Shipping** | Orders ready to ship; print 超商 and courier labels in batches; mark shipped; see parcels arrived, collected, or returned uncollected. |
 | **Customers** | Profile, orders, points and store-credit history; adjust points with a required reason; merge duplicate records; block a phone number from pay-at-pickup; delete a member. |
 | **Products** | Add and edit name, description, photos, price, pack size, stock, ingredients; publish or hide. |
@@ -278,7 +279,7 @@ The rule: if staff need it to run the shop, it is a screen. All in Traditional C
 | **shipments** | id, order_id, method (7-11 / FamilyMart / home), store_code, store_name, address, tracking_no, status, shipped_at, arrived_at, picked_up_at, returned_at | |
 | **invoices** | id, order_id, invoice_no, carrier_type, carrier_value, buyer_tax_id, donation_code, amount, status (issued / void), issued_at | |
 | **invoice_allowances** | id, invoice_id, allowance_no, amount, issued_at | |
-| **refunds** | id, order_id, amount, method (original / bank transfer / store credit), bank_account, reason, status, staff_id, created_at | |
+| **refunds** | id, order_id, amount, method (original / bank transfer / store credit), bank_account, reason, status, staff_id, created_at | One per order: unique on order_id. |
 | **refund_items** | id, refund_id, order_item_id, qty, amount | |
 | **points_ledger** | id, customer_id, order_id, kind (earn / spend / return / cancel / adjust), points, note, staff_id, created_at | Append-only. Unique on order_id + kind where kind = earn. |
 | **store_credit_ledger** | id, customer_id, refund_id, order_id, kind (credit / spend / cash-out), amount, created_at | Append-only; never expires. |
