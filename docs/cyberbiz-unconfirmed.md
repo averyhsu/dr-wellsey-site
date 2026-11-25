@@ -4,18 +4,16 @@ Private working list. These are things CYBERBIZ's published documentation does n
 
 "Not found" means the help centre says nothing about it. It does not mean the feature is missing. Each item is a question for CYBERBIZ sales or something to test in the 30-day trial.
 
+Numbers are kept from the first version of this list. Points 2, 3, 6 and 8 were moved into the comparison on 2026-11-25 at the owner's decision (see the last section).
+
 ## Would change the comparison if answered
 
 | # | Question | Why it matters | What the docs do say |
 |---|---|---|---|
 | 1 | Is there a store credit (購物金) balance separate from points, usable for refunds? | We planned store credit as a refund method for ATM and pay-at-pickup orders. | Not found. Points are the only balance described. |
-| 2 | Can reviews be limited to people who bought the product, with a verified-purchase mark? One review per item bought? | Our reviews are buyers only. | Only that the reviewer must be signed in. |
-| 3 | Is there any moderation rule beyond the single switch: by star rating, by keyword, or timed auto-publish? | Our design auto-publishes clean positive reviews and filters health claims. | One switch: hold all reviews for approval, or publish all. |
 | 4 | Can the brand reply publicly to a review? | Our answer to negative reviews is a public reply. | Not found. Staff can approve, delete or edit. |
 | 5 | Is showing review stars on the storefront available on PLUS plans, or only 企業版? | Decides whether reviews are usable at all on the plan we would pick. | Two of their own pages disagree. |
-| 6 | How is the sold count calculated (do cancelled or returned orders reduce it)? Can it be rounded, hidden below a minimum, or given a starting number? | We decided on rounded down with "+", hidden under 100. | Only that a display switch exists on drag-and-drop themes. |
 | 7 | Is there a message inviting a review after an order completes? | Our review flow starts from that message. | Not found. |
-| 8 | Is there a scheduled repurchase reminder (around day 25)? | Planned for a later phase. | Not found. Their automation tool sends to saved member groups on a schedule. |
 | 9 | Does a guest who registers later keep their earlier orders? | Our design lets them claim past orders after verifying. | Not found for the website. Accounts with the same email merge. |
 | 10 | Is every staff action logged, or only some? | Needed for 個資法 accountability. | Order changes, logins and exports are recorded. |
 
@@ -45,6 +43,17 @@ Private working list. These are things CYBERBIZ's published documentation does n
 | 25 | Does 專業版+ carry a cut of sales, and how much? | It is missing from the plan comparison table. |
 | 26 | Which listed plan prices are current? | Different pages on their site show different figures. |
 | 27 | SMS price per message; price of the CHAT BOX inbox; price of extra feature modules beyond the two included. | Not found. |
+
+## Moved into the comparison, still not confirmed
+
+These now appear in the comparison PDFs as plain statements. The documentation supports them only as far as shown here, so they remain worth confirming.
+
+| # | Stated in the comparison | What the docs do say |
+|---|---|---|
+| 2 | Reviewers must be signed-in members. | Stated directly. Whether reviewing is limited to buyers of the product is not found. |
+| 3 | No moderation rules: approve every review by hand, or publish all. | One switch is documented. No rule by star rating, keyword or timer is described. |
+| 6 | Shows the running total of units sold, as is. | A switch shows cumulative units sold. Rounding, a minimum, and how returns are counted are not described. |
+| 8 | No built-in repurchase reminder. | None is described. Their automation tool can send scheduled messages to saved member groups, which might be set up to do a similar job. |
 
 ## Related lists
 
