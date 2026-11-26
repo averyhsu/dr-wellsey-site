@@ -12,8 +12,10 @@ We are deciding between two ways to build an online shop for a Taiwanese probiot
 
 The owner is an administrator of a live CYBERBIZ shop:
 
-- Admin: `https://biobunbanstore.cyberbiz.co/admin`
-- Storefront: `https://www.biobunban.com`
+- Admin: the shop's `/admin` address, which the owner will give you.
+- Storefront: the shop's public address, which the owner will give you.
+
+That shop belongs to a different business from the brand above. Do not record its name, address or business details in the report.
 
 **Your job is to check every requirement in section 5 against what this admin really offers, and report what you find.** The goal is the truth about the platform, whichever way it points. A requirement that turns out to be fully supported is as useful a finding as one that is not.
 

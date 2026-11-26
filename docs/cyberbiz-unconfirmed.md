@@ -1,61 +1,102 @@
-# CYBERBIZ: points not confirmed
+# CYBERBIZ: what is confirmed and what is not
 
-Private working list. These are things CYBERBIZ's published documentation does not state, or states unclearly, as read on 2026-11-25. None of them appear in the comparison PDFs, which contain confirmed points only.
+Private working list. Updated 2026-11-26 after two reviews of a live CYBERBIZ shop run by an unrelated business: the public storefront as a signed-out visitor, and the admin panel through a read-only session. That shop is not named here, and details specific to it are left out.
 
-"Not found" means the help centre says nothing about it. It does not mean the feature is missing. Each item is a question for CYBERBIZ sales or something to test in the 30-day trial.
+The comparison PDFs contain none of the open points below.
 
-Numbers are kept from the first version of this list. Points 2, 3, 6 and 8 were moved into the comparison on 2026-11-25 at the owner's decision (see the last section).
+## Limits of the admin review
 
-## Would change the comparison if answered
+- **The signed-in account has the Co-managers role.** These screens returned "no permission": Checkout Page & Logistics, Payment Settings, Delivery Settings, Convenience Store Logistics, Reconciliation Center, All Customers, VIP Settings.
+- **The report received covers areas A to G and the first reviews check only.** Reviews (H2 to H14), sold count (I), design and content (J), and staff, records and reports (K) were not in it.
+- **The shop is on the 企業版 plan.** What it shows may not be available on other plans.
 
-| # | Question | Why it matters | What the docs do say |
-|---|---|---|---|
-| 1 | Is there a store credit (購物金) balance separate from points, usable for refunds? | We planned store credit as a refund method for ATM and pay-at-pickup orders. | Not found. Points are the only balance described. |
-| 4 | Can the brand reply publicly to a review? | Our answer to negative reviews is a public reply. | Not found. Staff can approve, delete or edit. |
-| 5 | Is showing review stars on the storefront available on PLUS plans, or only 企業版? | Decides whether reviews are usable at all on the plan we would pick. | Two of their own pages disagree. |
-| 7 | Is there a message inviting a review after an order completes? | Our review flow starts from that message. | Not found. |
-| 9 | Does a guest who registers later keep their earlier orders? | Our design lets them claim past orders after verifying. | Not found for the website. Accounts with the same email merge. |
-| 10 | Is every staff action logged, or only some? | Needed for 個資法 accountability. | Order changes, logins and exports are recorded. |
+## Confirmed on the live shop
 
-## Would not change the comparison, but needed before setup
+| Topic | What was seen |
+|---|---|
+| Plan | 企業版. API and webhooks are available to custom apps, with scopes for customers, orders and products. |
+| Guest checkout | Two registration modes only: "fast checkout with registration" and "registration required". Checkout needs no sign-in or password, but a consent box, ticked by default and required, registers the buyer as a member. |
+| Sign-in | LINE, Google, Facebook, and email or mobile with password. |
+| Registration fields | Email, mobile, birthday and gender can each be set required or optional and shown or hidden per page. This shop has mobile required and email optional. |
+| Verification | Email or SMS activation link after sign-up. Not a one-time code. SMS costs 1 coin (NT$ 1) per domestic message. |
+| Checkout | One page. Promo code and referral code fields are shown to signed-out buyers. |
+| Marketing consent | A separate tick box, ticked by default. |
+| Payment | Card, Apple Pay, Google Pay, LINE Pay, virtual ATM, 街口 and 銀聯, through CYBERBIZ Payments. |
+| Delivery | 7-11 and 全家 pickup (prepaid and pay-at-pickup methods both exist), 中華郵政, 黑貓, store pickup, DHL. Fee tiers by order amount, with a free-shipping threshold. |
+| Invoices | 會員載具, 統編, 手機載具, 自然人憑證 and 捐贈碼 offered at checkout. |
+| Order statuses | Payment, shipping and order status are separate lists. Partial return and partial refund statuses exist. |
+| Points | 1 point = NT$ 1 (editable). Expiry can be never. Per-order limit can be "no limit". Sign-up, birthday and review bonuses each have their own field. Points are credited when the order is closed. |
+| Points limit per product | Each variant has a "Credit(s)" field capping points on that item. The shop reviewed uses it, capping points at about a quarter of the price. |
+| Store credit | No 購物金, 儲值金, 禮物卡 or customer wallet in any menu. |
+| Promo codes | Types: fixed amount, percentage, free shipping, gift. Minimum spend, dates, total-use and per-customer limits. No members-only option. No tag or campaign field; a per-code report exists. Code format: Latin letters, digits and hyphen. Checkout here allows 3 codes per order. |
+| LINE | Official Account connected. Message templates for new order, payment, cancel, shipping, arrived at store, pay-at-pickup, returns and refunds, each switchable. Email templates for the same events. |
+| Order completion message | No email or LINE template is sent when an order completes, and none asks for a review. A webhook event for order completion exists. |
+| Order source | A "Source" column (CYBERBIZ / Merchant / POS / Warehouse). No LINE-versus-website label or report. |
+| Reviews | Sign-in required to review. Settings: approval on or off, hide part of the name, reCAPTCHA, reward on approval. A star distribution is shown on the product page. |
+| Tracking | LINE Tag, Google Analytics 4, Google Tag Manager, Facebook Pixel. |
 
-| # | Question | What the docs do say |
+## Corrections to earlier statements
+
+| Earlier statement | What the live shop shows |
+|---|---|
+| "Customers can check out without creating an account" (listed as the same on both) | Checkout registers the buyer as a member. Now a difference in the comparison. |
+| "Codes are fixed at 8 characters" | Wrong for ordinary codes, which run 4 to 12 characters here. The 8-character rule applies only to member coupons imported by spreadsheet. Removed. |
+
+## Still open
+
+### Would change the comparison
+
+| # | Question | Status |
 |---|---|---|
-| 11 | Do buyers who check out without registering earn points? | Not found. |
-| 12 | Can buyers who check out without registering use a promo code? | "Any member" with the code can use it. |
-| 13 | Is the free-shipping threshold really judged after points, and can that be changed? | Stated as a general rule: each step uses what is left after the previous one, and shipping comes after points. Not stated for free shipping specifically. |
-| 14 | Can 超商取貨付款 be capped by order value? | Amount limits per payment method exist on some plans; not stated for store pickup specifically. |
-| 15 | What happens to payment and invoice when an order is paid entirely with points? | Not found. |
-| 16 | Are points spent on an order excluded before new points are calculated? | Earning is on the checkout amount excluding shipping. |
-| 17 | Is a promo code's total-use count restored when an order is cancelled? | Coupons are returned on cancellation; the count is not mentioned. |
-| 18 | With 綠界 as the invoice provider, are 手機條碼, donation and 統編 offered at checkout? | Listed only for invoices CYBERBIZ issues itself (企業版). |
-| 19 | How is the marketing-consent tick box worded, and is it unticked by default? | Members can set their own subscription flags. |
-| 20 | Is checkout a single page? | Not found. |
-| 21 | How far are theme code edits honoured on drag-and-drop themes? Can login, member centre and order pages be edited? | "Only a few" edits supported; some may not take effect. |
-| 22 | Can member points be written through their developer interface? | Reading is possible. Writing not found; the full reference could not be opened. |
-| 23 | What is the payout cycle? | Not found. |
-| 24 | Are LINE notification messages by phone number (通知型訊息) supported? | Not found. |
+| 1 | Can the "register as a member" box at checkout be made optional or removed? | No switch on the screens the account could open. One may exist on the blocked Checkout Page screen. The comparison states there is no guest-only mode. |
+| 2 | Can reviews be limited to buyers, with a verified mark? | No such option seen in review settings. |
+| 3 | Does the AUTOMATION app offer an "order completed" or "N days after purchase" trigger? | Not opened; it needs a separate sign-in. The comparison states there is no built-in review invitation or repurchase reminder. |
+| 4 | How is the sold count calculated, and can it be rounded, hidden below a minimum, or given a starting number? | Not covered by the admin report. This shop has the count switched off. |
+| 5 | Which page types can the theme code editor change? | Not covered by the admin report. |
+| 6 | Is every staff action logged? | Not covered by the admin report. |
+| 7 | Can the brand reply publicly to a review? | Not covered by the admin report. |
+| 8 | Is showing review stars available below 企業版? | Shown on this 企業版 shop. Unknown for other plans. |
 
-## Pricing points not confirmed
+### Needed before setup
 
-| # | Question | What the docs do say |
+| # | Question | Status |
 |---|---|---|
-| 25 | Does 專業版+ carry a cut of sales, and how much? | It is missing from the plan comparison table. |
-| 26 | Which listed plan prices are current? | Different pages on their site show different figures. |
-| 27 | SMS price per message; price of the CHAT BOX inbox; price of extra feature modules beyond the two included. | Not found. |
+| 9 | Can the marketing consent box start unticked? | Ticked by default; no setting found on reachable screens. |
+| 10 | Which amount are points earned on: before or after promo code and points? | The screen does not say. |
+| 11 | How do points behave on a return? | No setting on the points screen; an email template for returned points exists. |
+| 12 | What do an empty and a zero value mean in the per-variant points limit? | Not stated on screen. The help centre says zero means points cannot be used on that item. |
+| 13 | Is the free-shipping threshold judged after points, and can that be changed? | Help centre states it as a general rule. No setting seen. |
+| 14 | Unpaid-order cancellation and order auto-close: ranges and what they release. | On blocked screens. |
+| 15 | Pay-at-pickup: order-value cap and automatic blocking after uncollected parcels. | On blocked screens. |
+| 16 | Can the shop use its own 綠界 or 藍新 account? Invoice provider and issuing-time options. | On blocked screens. |
+| 17 | Refund methods for ATM and pay-at-pickup orders; one refund per order. | Needs an order screen. |
+| 18 | Does a cancelled order return the promo code use? | Not found. |
+| 19 | Zero-amount orders: payment status and invoice. | Not found. |
+| 20 | Can members delete their account? | Customer screens blocked. The help centre says accounts can only be disabled. |
+| 21 | Can a guest look up an order without signing in? | No lookup link on the storefront; order details go by email. |
+| 22 | Staff chat in LINE alongside automated messages; what Chat Box provides. | Chat Box is set up on this shop; not opened. |
 
-## Moved into the comparison, still not confirmed
+### Pricing
 
-These now appear in the comparison PDFs as plain statements. The documentation supports them only as far as shown here, so they remain worth confirming.
-
-| # | Stated in the comparison | What the docs do say |
+| # | Question | Status |
 |---|---|---|
-| 2 | Reviewers must be signed-in members. | Stated directly. Whether reviewing is limited to buyers of the product is not found. |
-| 3 | No moderation rules: approve every review by hand, or publish all. | One switch is documented. No rule by star rating, keyword or timer is described. |
-| 6 | Shows the running total of units sold, as is. | A switch shows cumulative units sold. Rounding, a minimum, and how returns are counted are not described. |
-| 8 | No built-in repurchase reminder. | None is described. Their automation tool can send scheduled messages to saved member groups, which might be set up to do a similar job. |
+| 23 | What does this shop pay as a cut of sales? | Not visible to this account. The public price table lists 5% for 企業版. |
+| 24 | Does 專業版+ carry a cut of sales? | Missing from the public table. |
+| 25 | Which listed plan prices are current? | Pages on their site disagree. |
 
-## Related lists
+## Tests that need a trial shop
 
+These need a real order, registration or message, so they were not run on the live shop.
+
+- Spend points on an order near the free-shipping threshold: is shipping then charged?
+- Pay an order entirely with points: payment status and invoice.
+- Refund part of an order: points, promo code and invoice.
+- Let an ATM order go unpaid: are stock, code and points released?
+- Submit a review: who can, when, and what the customer sees after rejection.
+- Which sold count is shown after a refund.
+
+## Related files
+
+- Exploration brief used for the admin review: `docs/cyberbiz-exploration-plan.md`.
 - Items needed from the company: `docs/company-checklist-zh.pdf` and `docs/company-checklist-en.pdf`.
 - Open design questions and legal points: `docs/payment-system-design.md`, sections 9 and 11.
